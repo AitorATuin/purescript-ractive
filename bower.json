@@ -1,7 +1,9 @@
 {
   "name": "purescript-ractive",
   "description": "Ractive bindings for PureScript (Work in progress)",
-  "keywords": ["purescript"],
+  "keywords": [
+    "purescript"
+  ],
   "ignore": [
     "**/.*",
     "bower_components",
@@ -15,12 +17,15 @@
     "package.json"
   ],
   "dependencies": {
-    "purescript-arrays"               : "*",
-    "purescript-maybe"                : "*",
-    "purescript-foldable-traversable" : "*"
+    "purescript-arrays": "*",
+    "purescript-maybe": "*",
+    "purescript-foldable-traversable": "*",
+    "purescript-xhr": "philopon/purescript-xhr#~0.1.1",
+    "purescript-easy-ffi": "~1.0.1",
+    "purescript-foreign": "~0.1.4"
   },
   "devDependencies": {
-    "purescript-math"                 : "*",
-    "purescript-quickcheck"           : "*"
+    "purescript-math": "*",
+    "purescript-quickcheck": "*"
   }
 }
