@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="http://cdn.ractivejs.org/latest/ractive.min.js"></script>
+  <script src="../tmp/ractive/tut4.js"></script>
+  <title>Ractive with PureScript - Tut. I</title>
+  <link href="css/ractive.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <script id="template" type="text/ractive">
+  <div>
+    <div class="with-label output">
+    <div class="well">
+      <p style='color: {{color}}; font-size: {{size}}em; font-family: {{font}};'>
+        {{greeting}} {{name}}!
+      </p>
+    </div>
+    </div>
+    <div class="with-label execute">
+      <div class="well">
+      <pre><code>
+        changeText :: forall e. Ractive -> Eff (ractiveM :: RactiveM | e) Ractive
+        changeText =
+          setGreeting "Hola" >=>
+          setName "Mundo" >=>
+          setColor "purple" >=>
+          setFont "Georgia" >=>
+          setSize 6
+
+        execute1Fn :: Ractive -> Eff (trace :: Trace, ractiveM:: RactiveM) Unit
+        execute1Fn r = changeText r *> trace "on-click:execute1 executed"
+      </code></pre>
+      <button on-click="execute1" type="button" class="btn btn-success btn-sg">
+        <span class="glyphicon glyphicon-play"></span>Execute!
+      </button>
+      </div>
+    </div>
+  </div>
+  </script>
+<div class="container">
+  <div class="page-header">
+    <h1 class="title">Ractive with PureScript <small> Tutorial III</small></h1>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Tutorial III</div>
+    <div class="panel-body">
+      <div class="ractive-example" id="ractive-ps4">
+        <h2>This should be removed!</h2>
+      </div>
+    </div>
+    <div class="panel-footer">Aitor P. Iturri</div>
+  </div>
+</div>
+<div class="container source">
+</div>
+<script>
+  $(function() { PS.Main.tut4();});
+</script>
+</body>
+</html>

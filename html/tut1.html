@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="http://cdn.ractivejs.org/latest/ractive.min.js"></script>
+  <script src="../tmp/ractive/tut1.js"></script>
+  <title>Ractive with PureScript - Tut. I</title>
+  <style></style>
+</head>
+<body>
+  <script id="template" type="text/ractive">
+    <p>Hello World</p>
+  </script>
+<div class="container">
+  <div class="page-header">
+    <h1 class="title">Ractive with PureScript <small> Tutorial I</small></h1>
+  </div>
+  <div class="panel panel-primary">
+    <div class="panel-heading">Tutorial I</div>
+    <div class="panel-body">
+      <div class="ractive-example" id="ractive-ps1">
+        <h2>This should be removed!</h2>
+      </div>
+    </div>
+    <div class="panel-footer">Aitor P. Iturri</div>
+  </div>
+</div>
+<div class="container source">
+</div>
+<script>
+  $(function() { PS.Main.tut1(); });
+</script>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta>
+  <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  <script src="http://cdn.ractivejs.org/latest/ractive.min.js"></script>
+  <script type="text/javascript" src="js/oboe-browser.js"></script>
+  <script src="js/demo.js"></script>
+  <link href="css/ractive.css" rel="stylesheet" type="text/css">
+  <title>Ractive with PureScript - Tut. I</title>
+  <style></style>
+</head>
+<body>
+  <script id="ractive-nav-template" type="text/ractive">
+    <ul>
+    {{#tutorials}}
+       <li><span on-click='loadtutorial'>{{name}}</span></li>
+    {{/tutorials}}
+    </ul>
+  </script>
+  <script id="ractive-template" type="text/ractive">
+    <div>
+      <div class="with-label output">
+        <div class="well">
+          {{>outputP}}
+        </div>
+      </div>
+      <div class="with-label execute">
+        <div class="well">
+          {{>contentP}}
+        </div>
+      </div>
+    </div>
+  </script>
+<div class="container">
+  <div class="page-header">
+    <h1 class="title">Ractive with PureScript <small> Tutorial I</small></h1>
+  </div>
+  <nav id="ractive-nav">
+
+  </nav>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+        <span class="pull-left">Tutorial I</span>
+        <button class="btn btn-default pull-right btn-run">Run Tutorial</button>
+    </div>
+    <div class="panel-body">
+      <div class="ractive-example" id="ractive-element">
+        <h2>This should be removed!</h2>
+      </div>
+    </div>
+    <div class="panel-footer">Aitor P. Iturri</div>
+  </div>
+</div>
+<div class="container source">
+</div>
+<script>
+  $(function() { PS.Main.init(); });
+</script>
+</body>
+</html>
