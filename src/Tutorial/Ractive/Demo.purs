@@ -69,9 +69,8 @@ ractiveTut config partials = ContT \next -> do
     el: config.element,
     partials: {outputP: partials.output, contentP: partials.content}}
   next r
---  ractive <- Ract.ractive config.template config.element {}
---  Ract.setPartial "outputP" partials.output ractive
---  Ract.setPartial "contentP" partials.content ractive
+
+--ractiveTut2 partials
 
 loadTutorial :: forall e. TutorialConfig -> Unit -> ContT Unit (Eff (ractiveM::Ract.RactiveM,xhr::XHR | e)) Ract.Ractive
 loadTutorial config = outputPartialTut
