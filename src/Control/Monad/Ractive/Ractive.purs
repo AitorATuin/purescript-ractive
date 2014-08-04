@@ -4,10 +4,11 @@ import Control.Monad.Eff
 import Data.Foreign.EasyFFI
 
 -- TODO: How to restrict values a of type String?
-type Data a = {
+type Data a b = {
   template :: String,
   el :: String,
-  partials :: { | a}}
+  partials :: { | a},
+  "data" :: { | b}}
 
 -- TODO: Add Event Type
 
@@ -23,7 +24,7 @@ ffiP = unsafeForeignProcedure
 ractive :: forall a. String -> String -> a -> RactiveEff Ractive
 ractive = ffiF ["template", "document", "data", ""] "new Ractive({template:template, el: document, data:data})"
 
-ractiveFromData :: forall a. Data a -> RactiveEff Ractive
+ractiveFromData :: forall a b. Data a b -> RactiveEff Ractive
 ractiveFromData = ffiF ["data", ""] "new Ractive(data);"
 
 get :: forall a. String -> Ractive -> RactiveEff a

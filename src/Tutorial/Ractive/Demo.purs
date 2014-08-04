@@ -1,4 +1,4 @@
-module Tutorial.Ractive.Demo where
+module Tutorial.Ractive.Tutorial.Demo where
 
 import Control.Monad.Eff
 import qualified Control.Monad.Eff.Ractive as Ract
@@ -10,13 +10,7 @@ import Control.Monad.Cont.Trans
 import Data.Maybe
 import Network.HTTP
 import Network.XHR
-import Tutorial.Ractive.Demo.Tutorials
-
-type Template = String
-
-type TutorialPartials = {
-  output  :: Template,
-  content :: Template}
+import Tutorial.Ractive.Tutorial
 
 tutorialPartials :: Template -> Template -> TutorialPartials
 tutorialPartials output content = {output: output, content: content}
@@ -26,14 +20,6 @@ type TutorialConfig = {
   outputTemplate :: URI,
   element :: String,
   template :: String}
-
-data Launcher = Launcher TutorialConfig
-type TutorialConfigEff = Eff(xhr::XHR,ractiveM::Ract.RactiveM,trace::Trace)
-
-ractiveTemplate = "#ractive-template"
-ractiveElement = "ractive-element"
-
---tutorials = [{"name": "tut1"},{"name": "tut2"}]
 
 template :: String -> String -> URI -> URI -> TutorialConfig
 template element template baseUri dir = {contentTemplate: content, outputTemplate: output, element: element, template: template}
@@ -63,20 +49,12 @@ contentPartialTut :: forall e. URI -> (String -> TutorialPartials) -> ContT Unit
 contentPartialTut = getTemplate \tmpl ->
   \fun -> fun tmpl
 
-ractiveTut :: forall e. TutorialConfig -> TutorialPartials -> ContT Unit (Eff (ractiveM::Ract.RactiveM | e)) Ract.Ractive
-ractiveTut config partials = ContT \next -> do
-  r <- Ract.ractiveFromData {template: config.template,
-    el: config.element,
-    partials: {outputP: partials.output, contentP: partials.content}}
-  next r
-
 --ractiveTut2 partials
 
-loadTutorial :: forall e. TutorialConfig -> Unit -> ContT Unit (Eff (ractiveM::Ract.RactiveM,xhr::XHR | e)) Ract.Ractive
+loadTutorial :: forall e. TutorialConfig -> Unit -> ContT Unit (Eff (ractiveM::Ract.RactiveM,xhr::XHR | e)) TutorialPartials
 loadTutorial config = outputPartialTut
   config.outputTemplate >=>
-  contentPartialTut config.contentTemplate >=>
-  ractiveTut config
+  contentPartialTut config.contentTemplate
 
 launch :: forall a e. Tutorial a (xhr :: XHR, trace :: Trace, ractiveM :: Ract.RactiveM | e) -> Eff (xhr :: XHR, trace :: Trace, ractiveM :: Ract.RactiveM | e) Unit
 launch (Tutorial name tutorialF) = runContT (executeTutorial unit) $ \r ->
@@ -84,13 +62,8 @@ launch (Tutorial name tutorialF) = runContT (executeTutorial unit) $ \r ->
   where
     executeTutorial = loadTutorial (templateTuto name) >=> tutorialF
 
---runContT (loadTutorial tutorial unit) $ \r ->
---  trace "DONE"
-
 init = do
   r <- Ract.ractive "#ractive-nav-template" "ractive-nav" {tutorials: tutorials}
   flip (Ract.on "loadtutorial") r \r -> do
     launch tutorial1
-    --launch templateTuto1
-    --trace "Cargado"
   trace "Initialization done"
