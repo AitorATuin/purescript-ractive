@@ -1,7 +1,7 @@
 .*
 !/.bowerrc
 !/.gitignore
-!/.travis.ymls
+!/.travis.ym
 /output/
 /node_modules/
 /bower_components/
