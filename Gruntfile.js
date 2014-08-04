@@ -9,7 +9,7 @@ module.exports = function(grunt) {
       "bower_components/purescript-*/src/**/*.purs"
     ],
 
-    clean: ["tmp", "output"],
+    clean: ["tmp", "output", "html/js/*"],
 
     pscMake: {
       lib: {
@@ -21,6 +21,17 @@ module.exports = function(grunt) {
     },
 
     dotPsci: ["<%=libFiles%>"],
+
+    psc: {
+      demo: {
+        options: {
+          module: ["Tutorial.Ractive.Demo"],
+          main: false
+        },
+        src: ["src/Tutorial/Ractive/*.purs", "<%=libFiles%>"],
+        dest: "html/js/demo.js"
+      }
+    },
 
     copy: [
       {
@@ -47,6 +58,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-purescript");
 
   grunt.registerTask("test", ["pscMake:tests", "copy", "execute:tests"]);
+  grunt.registerTask("demo", ["psc:demo"])
   grunt.registerTask("make", ["pscMake:lib", "dotPsci"]);
-  grunt.registerTask("default", ["clean", "make", "test"]);
+  grunt.registerTask("default", ["clean", "make", "demo", "test"]);
 };

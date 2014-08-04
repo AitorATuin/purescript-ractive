@@ -6,7 +6,6 @@
   <script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
   <script src="http://cdn.ractivejs.org/latest/ractive.min.js"></script>
-  <script type="text/javascript" src="js/oboe-browser.js"></script>
   <script src="js/demo.js"></script>
   <link href="css/ractive.css" rel="stylesheet" type="text/css">
   <title>Ractive with PureScript - Tut. I</title>
@@ -21,13 +20,13 @@
     </ul>
   </script>
   <script id="ractive-template" type="text/ractive">
-    <div>
-      <div class="with-label output">
+    <div class="row">
+      <div class="with-label output col-md-5">
         <div class="well">
           {{>outputP}}
         </div>
       </div>
-      <div class="with-label execute">
+      <div class="with-label execute col-md-7">
         <div class="well">
           {{>contentP}}
         </div>
@@ -57,7 +56,7 @@
 <div class="container source">
 </div>
 <script>
-  $(function() { PS.Main.init(); });
+  $(function() { PS.Tutorial_Ractive_Demo.init(); });
 </script>
 </body>
 </html>
