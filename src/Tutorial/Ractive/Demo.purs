@@ -79,7 +79,7 @@ loadTutorial config = outputPartialTut
   contentPartialTut config.contentTemplate >=>
   ractiveTut config
 
---launch :: forall e1 e2. Tutorial Unit e2 -> Eff (ractiveM::Ract.RactiveM,xhr::XHR,trace::Trace | e1) Unit
+launch :: forall a e. Tutorial a (xhr :: XHR, trace :: Trace, ractiveM :: Ract.RactiveM | e) -> Eff (xhr :: XHR, trace :: Trace, ractiveM :: Ract.RactiveM | e) Unit
 launch (Tutorial name tutorialF) = runContT (executeTutorial unit) $ \r ->
   trace "DONE"
   where
