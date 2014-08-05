@@ -20,8 +20,8 @@ type TutorialTyp = forall e. Tutorial Unit (trace :: Trace, ractiveM :: RactiveM
 type Template = String
 
 type TutorialPartials = {
-  output  :: Template,
-  content :: Template}
+  outputP  :: Template,
+  contentP :: Template}
 
 ractiveTemplate = "#ractive-template"
 ractiveElement = "ractive-element"
@@ -41,16 +41,32 @@ mapOfTutorials = M.fromList $ flip zip listOfTutorials $ tutName <$> listOfTutor
 tutorial1 :: TutorialTyp
 tutorial1 = Tutorial "tut1" tutorial1Fn
 
+-- Rerenders a partial using a 'flag'.
+--   + see: https://github.com/ractivejs/ractive/issues/236
+tutorial1Run1 :: TutorialPartials -> Ractive -> Event -> Eff (trace::Trace,ractiveM::RactiveM) Unit
+tutorial1Run1 partials r event = do
+  set "showOutput" false r
+  setPartial "outputP" partials.outputP r
+  set "showOutput" true r
+
 tutorial1Fn :: TutorialFn
-tutorial1Fn ractive = ContT \_ -> do
+tutorial1Fn partials = ContT \_ -> do
   trace "Tutorial 1 starting"
+  r <- createRactive {outputP: "", contentP: partials.contentP} {}
+  on "run1" (tutorial1Run1 partials) r
   trace "Tutorial 1 Done"
 
 -- Tutorial 2
+tutorial2Run1 partials r event = do
+  set "showOutput" false r
+  setPartial "outputP" partials.outputP r
+  set "showOutput" true r
+
 tutorial2Fn :: TutorialFn
 tutorial2Fn partials = ContT \_ -> do
   trace "Tutorial 2 Starting"
-  r <- createRactive partials {}
+  r <- createRactive partials {name: "Värld", greetings:"Hej, hej"}
+  on "run1" (tutorial2Run1 partials) r
   trace "Tutorial 2 Done"
 
 tutorial2 = Tutorial "tut2" tutorial2Fn

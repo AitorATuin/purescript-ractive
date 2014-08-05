@@ -14,7 +14,7 @@ import Network.XHR
 import Tutorial.Ractive
 
 tutorialPartials :: Template -> Template -> TutorialPartials
-tutorialPartials output content = {output: output, content: content}
+tutorialPartials output content = {outputP: output, contentP: content}
 
 type TutorialConfig = {
   contentTemplate :: URI,
@@ -51,8 +51,7 @@ contentPartialTut = getTemplate \tmpl ->
   \fun -> fun tmpl
 
 loadTutorial :: forall e. TutorialConfig -> Unit -> ContT Unit (Eff (ractiveM::Ract.RactiveM,xhr::XHR | e)) TutorialPartials
-loadTutorial config = outputPartialTut
-  config.outputTemplate >=>
+loadTutorial config = outputPartialTut config.outputTemplate >=>
   contentPartialTut config.contentTemplate
 
 launch :: forall a e. Tutorial a (xhr :: XHR, trace :: Trace, ractiveM :: Ract.RactiveM | e) -> Eff (xhr :: XHR, trace :: Trace, ractiveM :: Ract.RactiveM | e) Unit

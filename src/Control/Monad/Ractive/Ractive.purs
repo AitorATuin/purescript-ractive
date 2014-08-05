@@ -15,6 +15,8 @@ type Event = {node :: DOMNode,
   keypath :: String,
   context :: {name :: String}}
 
+data RenderQuery = RQString String | RQNode DOMNode
+
 foreign import data DOMEvent :: *
 
 foreign import data DOMNode :: *
@@ -81,3 +83,21 @@ foreign import on
    \    } \
    \  } \
    \}" :: forall a e. String -> (Ractive -> Event -> Eff e a) -> Ractive -> RactiveEff Ractive
+
+foreign import updateModel
+  "function updateModel(ractive) {\
+  \ return function() {\
+  \   return ractive.updateModel(); \
+  \}}" :: Ractive -> RactiveEff Unit
+
+foreign import renderById
+  "function renderById(id) {\
+  \  return function (ractive) {\
+  \    return function () {\
+  \      ractive.render(id); \
+  \    } \
+  \  }}" :: String -> Ractive -> RactiveEff Unit
+
+foreign import teardown
+  "function teardown(ractive) {\
+  \ r}"
