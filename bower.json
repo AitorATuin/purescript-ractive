@@ -24,7 +24,8 @@
     "purescript-easy-ffi": "~1.0.1",
     "purescript-foreign": "~0.1.4",
     "purescript-transformers": "~0.0.5",
-    "purescript-http": "~0.1.1"
+    "purescript-http": "~0.1.1",
+    "purescript-maps": "~0.0.4"
   },
   "devDependencies": {
     "purescript-math": "*",
