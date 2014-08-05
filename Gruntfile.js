@@ -49,6 +49,16 @@ module.exports = function(grunt) {
       tests: {
         src: "tmp/index.js"
       }
+    },
+
+    stencil: {
+      main: {
+        options: {},
+        files: {
+          'html/templates/tut1/content.html': ['src/stencil/tut1/content.dot.html'],
+          'html/templates/tut1/output.html': ['src/stencil/tut1/output.dot.html'],
+        }
+      }
     }
   });
 
@@ -56,6 +66,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks("grunt-contrib-clean");
   grunt.loadNpmTasks("grunt-execute")
   grunt.loadNpmTasks("grunt-purescript");
+  grunt.loadNpmTasks('grunt-stencil');
 
   grunt.registerTask("test", ["pscMake:tests", "copy", "execute:tests"]);
   grunt.registerTask("demo", ["psc:demo"])
