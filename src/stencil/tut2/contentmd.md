@@ -9,9 +9,11 @@ That's what we are going to do now, we are going to change the content of our me
 
 The first thing to do is to change our beautiful but static template with something like this:
 
+{{=<% %>=}}
 ```html
 <h2 class="hello">{{greetings}} {{name}}</h2>
 ```
+<%={{ }}=%>
 
 Good! Lets use this template to show our old but remarkable message.
 
@@ -29,7 +31,9 @@ main = ractive "template" "#document" {greeting: "Hej, hej", name: "Värld!"}
 ---
 ### The code in more detail!
 ---
-A short explanation about the code above;
+
+Just like we did before with the first example, let's try to explain that small chunk of **purescript** code.
+
 
 * First we load the module with ```import Control.Eff.Ractive```
 * Then, we define function which the only interesting thing that it does is to create a new ractive object.
