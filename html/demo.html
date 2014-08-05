@@ -22,8 +22,10 @@
   <script id="ractive-template" type="text/ractive">
     <div class="row">
       <div class="with-label output col-md-5">
-        <div class="well">
-          {{>outputP}}
+        <div class="well" id="output">
+          {{#showOutput}}
+            {{>outputP}}
+          {{/showOutput}}
         </div>
       </div>
       <div class="with-label execute col-md-7">

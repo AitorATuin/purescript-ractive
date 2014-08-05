@@ -56,7 +56,7 @@ module.exports = function(grunt) {
         options: {},
         files: {
           'html/templates/tut1/content.html': ['src/stencil/tut1/content.dot.html'],
-          'html/templates/tut1/output.html': ['src/stencil/tut1/output.dot.html'],
+          'html/templates/tut2/content.html': ['src/stencil/tut2/content.dot.html'],
         }
       }
     }
