@@ -97,7 +97,3 @@ foreign import renderById
   \      ractive.render(id); \
   \    } \
   \  }}" :: String -> Ractive -> RactiveEff Unit
-
-foreign import teardown
-  "function teardown(ractive) {\
-  \ r}"
