@@ -1,4 +1,4 @@
-module Tutorial.Ractive.Tutorial.Demo where
+module Tutorial.Ractive.Demo where
 
 import Control.Monad.Eff
 import qualified Control.Monad.Eff.Ractive as Ract
@@ -8,9 +8,10 @@ import Control.Bind ((>=>))
 import Control.Monad.Trans
 import Control.Monad.Cont.Trans
 import Data.Maybe
+import Data.Map (lookup, keys)
 import Network.HTTP
 import Network.XHR
-import Tutorial.Ractive.Tutorial
+import Tutorial.Ractive
 
 tutorialPartials :: Template -> Template -> TutorialPartials
 tutorialPartials output content = {output: output, content: content}
@@ -49,8 +50,6 @@ contentPartialTut :: forall e. URI -> (String -> TutorialPartials) -> ContT Unit
 contentPartialTut = getTemplate \tmpl ->
   \fun -> fun tmpl
 
---ractiveTut2 partials
-
 loadTutorial :: forall e. TutorialConfig -> Unit -> ContT Unit (Eff (ractiveM::Ract.RactiveM,xhr::XHR | e)) TutorialPartials
 loadTutorial config = outputPartialTut
   config.outputTemplate >=>
@@ -62,8 +61,13 @@ launch (Tutorial name tutorialF) = runContT (executeTutorial unit) $ \r ->
   where
     executeTutorial = loadTutorial (templateTuto name) >=> tutorialF
 
-init = do
-  r <- Ract.ractive "#ractive-nav-template" "ractive-nav" {tutorials: tutorials}
-  flip (Ract.on "loadtutorial") r \r -> do
-    launch tutorial1
+init tutorials = do
+  r <- Ract.ractive "#ractive-nav-template" "ractive-nav" {tutorials:(\x -> {name: x}) <$> keys tutorials}
+  flip (Ract.on "loadtutorial") r $ \r ev -> do
+    launch $ fromMaybe errorTutorial $ lookup ev.context.name tutorials
+    trace "onLoadTutorial!"
   trace "Initialization done"
+    where
+      errorTutorial = Tutorial "error" (\_ -> ContT \_ -> trace "ERROR loading tutorial")
+
+main = init mapOfTutorials

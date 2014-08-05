@@ -10,7 +10,14 @@ type Data a b = {
   partials :: { | a},
   "data" :: { | b}}
 
--- TODO: Add Event Type
+type Event = {node :: DOMNode,
+  original :: DOMEvent,
+  keypath :: String,
+  context :: {name :: String}}
+
+foreign import data DOMEvent :: *
+
+foreign import data DOMNode :: *
 
 foreign import data RactiveM :: !
 
@@ -61,19 +68,16 @@ foreign import getPartial
   \  } \
   \}" :: String -> Ractive -> RactiveEff String
 
---on :: forall e. String -> (Ractive -> Eff e Unit) -> Ractive -> RactiveEff Unit
---on = ffiF ["event", "handler", "ractive", ""]
---  "ractive.on(event, handler)"
 foreign import on
    "function on(event) {\
    \  return function(handler) { \
    \    return function(ractive) { \
    \      return function() { \
    \        ractive.on(event, function(ev) { \
-   \          return handler(this)(); \
+   \          return handler(this)(ev)(); \
    \        }); \
    \        return ractive; \
    \      } \
    \    } \
    \  } \
-   \}" :: forall a e. String -> (Ractive -> Eff e a) -> Ractive -> RactiveEff Ractive
+   \}" :: forall a e. String -> (Ractive -> Event -> Eff e a) -> Ractive -> RactiveEff Ractive
