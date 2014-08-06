@@ -3,7 +3,7 @@
 
 ---
 
-We are cool enough that we can show dynamically a nice greeting to everyone, but it would be nicer if spanish people could understand us when being polite.
+We are cool enough, we can show dynamically a nice greeting to everyone, but it would be nicer if spanish people could understand us when being polite.
 
 That's what we are going to do now, we are going to change the content of our message.
 
@@ -15,9 +15,11 @@ The first thing to do is to change our beautiful but static template with someth
 ```
 <%={{ }}=%>
 
-Good! Lets use this template to show our old but remarkable message.
+Good! We have created two mustache delimiters which will be binded to the data in our ractive object.
 
-The **purescript** snippet to do this is the following:
+Lets use this template to show our old but remarkable message.
+
+The **PureScript** snippet to do this is the following:
 
 ```haskell
 import Control.Eff.Ractive
@@ -27,6 +29,23 @@ main = ractive "template" "#document" {greeting: "Hej, hej", name: "Värld!"}
 ```
 
 <button class="btn btn-primary" on-click="run1">run</button>
+
+Ok, now we have the same behavior than before but being dynamic, we can change the value of `greeting` and `name` and ractive will update the view.
+
+Let's see how to do that in **PureScript**:
+
+```haskell
+changeGreeting :: Ractive -> String -> String -> Eff (ractiveM :: RactiveM) Unit
+changeGreeting ractive = do
+  set "greeting" "Hola" ractive
+  set "name" "Mundo" ractive
+```
+
+That function gets a __Ractive__ instance and sets new values `greeting` and `name`.
+
+Try to run that function!
+
+<button class="btn btn-primary" on-click="run2">run</button>
 
 ---
 ### The code in more detail!
