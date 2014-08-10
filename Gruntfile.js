@@ -23,14 +23,6 @@ module.exports = function(grunt) {
     dotPsci: ["<%=libFiles%>"],
 
     psc: {
-      demo: {
-        options: {
-          module: ["Tutorial.Ractive.Demo"],
-          main: false
-        },
-        src: ["src/Tutorial/Ractive/*.purs", "<%=libFiles%>"],
-        dest: "html/js/demo.js"
-      }
     },
 
     copy: [
