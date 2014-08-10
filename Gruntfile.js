@@ -61,7 +61,6 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-stencil');
 
   grunt.registerTask("test", ["pscMake:tests", "copy", "execute:tests"]);
-  grunt.registerTask("demo", ["psc:demo"])
   grunt.registerTask("make", ["pscMake:lib", "dotPsci"]);
-  grunt.registerTask("default", ["clean", "make", "demo" ]);
+  grunt.registerTask("default", ["clean", "make"]);
 };
